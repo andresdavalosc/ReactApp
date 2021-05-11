@@ -1,11 +1,12 @@
 import React from 'react';
 import { View, Text, Switch,StyleSheet} from 'react-native';
-import { Colors } from 'react-native/Libraries/NewAppScreen';
+
 
 function Toggle(props){
 	return(
 		<View style={styles.container}>
 			<Text style={styles.text}>{props.value?'ON':'OFF'}</Text>
+            
 			<Switch style={styles.switch} value={props.value}
 				onValueChange={props.onValueChange}
 			/>
@@ -15,18 +16,20 @@ function Toggle(props){
 
 const styles =StyleSheet.create({
 	container:{
-		paddingVertical:10,
+		paddingVertical:1,
 		flexDirection:'row'
 	},
 	text:{
-		marginLeft:10,
+		marginTop:10,
+		marginLeft:30,
 		fontWeight:'bold',
 		fontSize:20,
 		flex:1,
 		color:'black'
 	},
 	switch:{
-		width:50
+		width:50,
+		marginRight:20
 	}
 
 })

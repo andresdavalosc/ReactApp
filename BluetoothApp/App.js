@@ -8,7 +8,7 @@
 
 import React from 'react';
 import BluetoothList from './app/bluetooth/containers/bluetooth-list'
-import PlayRoom from './app/bluetooth/containers/playroom'
+import PressurePlateMenu from './app/bluetooth/containers/PressurePlateMenu'
 import Button from './app/bluetooth/components/button';
 
 import { NavigationContainer } from '@react-navigation/native';
@@ -26,7 +26,7 @@ const MyStack = () => {
           component={BluetoothList}
           options={{ title: '' }}
         />
-        <Stack.Screen name="PlayRoom" component={PlayRoom} />
+        <Stack.Screen name="PressurePlateMenu" component={PressurePlateMenu} />
       </Stack.Navigator>
     </NavigationContainer>
   );

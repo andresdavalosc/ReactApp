@@ -1,24 +1,24 @@
 import React, { useState } from 'react';
-import { View, Text, FlatList,TouchableOpacity} from 'react-native';
+import { StyleSheet, Text, FlatList,TouchableOpacity} from 'react-native';
 import Layout from '../components/bluetooth-list-layout';
 import Empty from '../components/empty';
 import Toggle from '../components/toggle';
 import Subtitle from '../components/subtitle';
 import Device from '../components/device';
 import Button from '../components/button';
-import BluetoothSerial, { on } from 'react-native-bluetooth-serial-next';
-import Buttonc from '../components/button';
+import BluetoothSerial from 'react-native-bluetooth-serial-next';
 
 let txt='No Devices Found..'
 let onoff=true;
 let show=true;
+let isloading = false;
 const BluetoothList  = ({ navigation }) => { 
 	const list =[]	
 	const list2 =[]	
 	const [lista, setLista]= useState([]);
 	const[bolEnable, setBolEnable] = useState(false);
 	const [shouldShow, setshouldShow] = useState(false);
-	const renderEmpty = () => <Empty text ={txt} value={onoff}/>
+	const renderEmpty = () => <Empty text ={txt} value={onoff} load={isloading}/>
 	const renderItem = ({item}) => {
 		
 		return(
@@ -28,8 +28,6 @@ const BluetoothList  = ({ navigation }) => {
 		)
 	};
 
-
-	
 
 
 	const connect = async(value,value2) =>{
@@ -53,6 +51,7 @@ const BluetoothList  = ({ navigation }) => {
 	  
 	const enableBluetooth = async () => {
 		try {
+			isloading =true;
 			setBolEnable(true);
 			await BluetoothSerial.requestEnable();
 			const devices = await BluetoothSerial.listUnpaired();
@@ -65,7 +64,10 @@ const BluetoothList  = ({ navigation }) => {
 						list.push(na[i]['id'])
 						list2.push(na[i])
 						console.log(na[i]['name'])	
-					}																		
+						isloading =false;																				
+
+					}	
+					isloading =false;																				
 					console.log(show)	
 				}
 				
@@ -73,10 +75,11 @@ const BluetoothList  = ({ navigation }) => {
 			console.log(list)
 			setLista(list2);
 			console.log('on')
-								
-			
+											
 		} catch (error){
 			console.log(error);
+			isloading =false;
+			setBolEnable(false);
 		}
 	};
 
@@ -90,25 +93,28 @@ const BluetoothList  = ({ navigation }) => {
 			console.log(error);
 		}
 	};
+
 	const toggleBluetooth = value => {
 		if (value) {
 			show =true
 			txt="Searching Bluetooth devices..."
 			return enableBluetooth();
+		}else{
+			//setLista([]);
+			onoff =true
+			show =false
+			txt="No Devices Found.."
+			setshouldShow(false)
+			disableBluetooth();
 		}
-		setLista([]);
-		onoff =true
-		show =false
-		txt="No Devices Found.."
-		setshouldShow(false)
-		disableBluetooth();
+		
 	};
 
 	
 
 	return(
 		<Layout title='Bluetooth'>
-			<Toggle value={bolEnable} onValueChange={toggleBluetooth}/>
+			<Toggle value={bolEnable} onValueChange={toggleBluetooth} load={isloading}/>
 			<Subtitle title="Devices list"/>		
 			<FlatList			
 			data={lista}
@@ -127,6 +133,8 @@ const BluetoothList  = ({ navigation }) => {
 }
 
 export default BluetoothList
+
+
 
 //TODO
 //click on device

@@ -1,5 +1,6 @@
 import React from 'react';
 import { View, Text, StyleSheet} from 'react-native';
+import { color } from 'react-native-reanimated';
 
 function BluetoothListLayout(props){
 	return(
@@ -13,15 +14,15 @@ function BluetoothListLayout(props){
 
 const styles = StyleSheet.create({
 	container:{
-		paddingHorizontal:20,
-		paddingVertical:0,
-		marginTop:0,
-		backgroundColor:'white'
+		flex:1,
+		backgroundColor:'white',
+
 	},
 	title:{
-		marginLeft:0,
+		marginLeft:100,
 		fontSize:30,
-		fontWeight:'bold'
+		fontWeight:'bold',
+		color:"black"
 	}
 
 })

@@ -6,7 +6,7 @@ function Buttonc (props){
 	
 	return (
 		<View>
-			<Button disabled={enable} style={styles.container} title="Next step" onPress={() => props.value.navigate('PlayRoom')}/>
+			<Button disabled={enable} style={styles.container} title="Next step" onPress={() => props.value.navigate('PressurePlateMenu')}/>
 		</View>
 	);
 };
