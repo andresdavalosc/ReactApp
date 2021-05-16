@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { StyleSheet, Text, FlatList,TouchableOpacity} from 'react-native';
+import { StyleSheet, ToastAndroid, FlatList,TouchableOpacity} from 'react-native';
 import Layout from '../components/bluetooth-list-layout';
 import Empty from '../components/empty';
 import Toggle from '../components/toggle';
@@ -7,7 +7,9 @@ import Subtitle from '../components/subtitle';
 import Device from '../components/device';
 import Button from '../components/button';
 import BluetoothSerial from 'react-native-bluetooth-serial-next';
+import PP from './PressurePlateMenu';
 
+let txt2=''
 let txt='No Devices Found..'
 let onoff=true;
 let show=true;
@@ -18,31 +20,39 @@ const BluetoothList  = ({ navigation }) => {
 	const [lista, setLista]= useState([]);
 	const[bolEnable, setBolEnable] = useState(false);
 	const [shouldShow, setshouldShow] = useState(false);
-	const renderEmpty = () => <Empty text ={txt} value={onoff} load={isloading}/>
+	const renderEmpty = () => <Empty text ={txt} text2 ={txt2} value={onoff} load={isloading}/>
 	const renderItem = ({item}) => {
 		
 		return(
-			<TouchableOpacity onPress={() => connect(item.id,item.name) }>
+			<TouchableOpacity onPress={() => connect(item.id,item.name) }>				
 			 	<Device {...item} iconLeft={require('../icons/devices.png')} iconRight={require('../icons/bluetooth.png')} /> 
 			</TouchableOpacity>		
 		)
 	};
 
 
-
+	
 	const connect = async(value,value2) =>{
 		try{
 			console.log(value, 'was pressed');
 			console.log( 'bl: ', value2);
-			const device = await BluetoothSerial.pairDevice(value);
-			console.log(device)
-			if( device  != null){
+			//const device = await BluetoothSerial.pairDevice(value);
+			await BluetoothSerial.connect(value)
+    		.then((res) => {
+      		console.log(value2);
+      		connected = true;
+      		ToastAndroid.show(`Connected to device: ${value2}`, ToastAndroid.SHORT);
+    		})
+			console.log(value2)
+			if( value2  != null){
 				console.log('ok')
 				setLista([]);
-				txt="connected to bluetooth device"
+				txt="connected to:  "
+				txt2=value2
 				onoff =false
 				setshouldShow(!shouldShow)
 			}
+			<PP val={value2}/>
 		}		
 		 catch (error){
 			console.log(error);
@@ -54,7 +64,7 @@ const BluetoothList  = ({ navigation }) => {
 			isloading =true;
 			setBolEnable(true);
 			await BluetoothSerial.requestEnable();
-			const devices = await BluetoothSerial.listUnpaired();
+			const devices = await BluetoothSerial.discoverUnpairedDevices();
 			await BluetoothSerial.stopScanning();
 			const obj =JSON.stringify(devices)
 			const na = JSON.parse(obj)

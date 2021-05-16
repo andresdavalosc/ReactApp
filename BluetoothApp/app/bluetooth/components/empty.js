@@ -4,6 +4,7 @@ import {CirclesLoader, PulseLoader, TextLoader, DotsLoader,LinesLoader} from 're
 
 
 function Empty(props){
+
 	if(props.value == true && props.load == true){
 		return(
 			<View style={styles.container}>
@@ -23,7 +24,7 @@ function Empty(props){
 	else{
 		return(
 			<View style={styles.container}>
-				<Text style={styles.text}>{props.text}</Text>
+				<Text style={styles.text}>{props.text}{props.text2}</Text>
 				<Image style={styles.icon} source={require('../icons/connected.png')}/>
 			</View>
 		)
