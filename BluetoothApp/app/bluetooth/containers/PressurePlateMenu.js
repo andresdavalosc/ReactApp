@@ -43,7 +43,7 @@ const PlayRoom = (props) => {
 				<Text style={styles.text}  > Welcome! </Text>
 				<Text style={styles.subtext}  >Stand On the plate and Jump!</Text>				
 				<ImageBackground style={styles.box} source={require('../icons/white.jpg')}>
-				<Text style={styles.title}> {titleText} </Text>
+				<Text style={styles.title}> {titleText} cm </Text>
 				</ImageBackground>
 			</LinearGradient>
 		</View>
@@ -88,15 +88,16 @@ const styles =StyleSheet.create({
 		marginTop:100
 	},
 	title:{
-		marginTop:10,
 		color:"black",
 		textAlign: 'center',
-		fontWeight: 'bold'
+		fontWeight: 'bold',
+		fontSize:30
+
 	  },
 	box:{
 		flex:0.5,
-		width:150,
-		height:40,
+		width:250,
+		height:50,
 		textAlign: 'center'
 	}
 
