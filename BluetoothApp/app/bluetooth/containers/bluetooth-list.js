@@ -52,7 +52,7 @@ const BluetoothList  = ({ navigation }) => {
 				onoff =false
 				setshouldShow(!shouldShow)
 			}
-			<PP val={value2}/>
+			//<PP val={value2}/>
 		}		
 		 catch (error){
 			console.log(error);

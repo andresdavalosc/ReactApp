@@ -9,6 +9,10 @@
 import React from 'react';
 import BluetoothList from './app/bluetooth/containers/bluetooth-list'
 import PressurePlateMenu from './app/bluetooth/containers/PressurePlateMenu'
+import bothfeetjump from './app/bluetooth/containers/bothfeetjump'
+import leftfootjump from './app/bluetooth/containers/leftfootjump'
+import rightfootjump from './app/bluetooth/containers/rightfootjump'
+
 import Button from './app/bluetooth/components/button';
 
 import { NavigationContainer } from '@react-navigation/native';
@@ -21,12 +25,11 @@ const MyStack = () => {
   return (
     <NavigationContainer>
       <Stack.Navigator>
-        <Stack.Screen
-          name="BluetoothList"
-          component={BluetoothList}
-          options={{ title: '' }}
-        />
-        <Stack.Screen name="PressurePlateMenu" component={PressurePlateMenu} />
+        <Stack.Screen name="BluetoothList" component={BluetoothList} options={{ title: '' }}/>
+        <Stack.Screen name="PressurePlateMenu" component={PressurePlateMenu} options={{ title: 'Menu' }}/>
+        <Stack.Screen name="bothfeetjump" component={bothfeetjump} options={{ title: '' }}/>
+        <Stack.Screen name="leftfootjump" component={leftfootjump} options={{ title: '' }} />
+        <Stack.Screen name="rightfootjump" component={rightfootjump}  options={{ title: '' }}/>
       </Stack.Navigator>
     </NavigationContainer>
   );

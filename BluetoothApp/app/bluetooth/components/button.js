@@ -3,7 +3,7 @@ import { Button,StyleSheet, View} from 'react-native';
 
 let enable=false;
 function Buttonc (props){
-	
+	console.log(props.value.navigate)
 	return (
 		<View>
 			<Button disabled={enable} style={styles.container} title="Next step" onPress={() => props.value.navigate('PressurePlateMenu')}/>

@@ -1,105 +1,128 @@
 import React, { useEffect, useState } from 'react';
-import { Image, Text, ImageBackground,StyleSheet, View} from 'react-native';
+import { Button } from 'react-native-elements';
+import { TouchableOpacity, Text, Image,StyleSheet, View} from 'react-native';
 import BluetoothSerial from 'react-native-bluetooth-serial-next';
 import LinearGradient from 'react-native-linear-gradient'
 
-let dat=".";
-let connected = false
-const PlayRoom = (props) => {
-	//console.log(props.val)
-	const [titleText, setTitleText] = useState("");
-	useEffect(() => {
-		const interval = setInterval(() => {
-		received();
-		      
-		}, 1500 );
-		
-		const received = async () => {
-			await BluetoothSerial.readFromDevice().then((datas) => {dat = datas});
-			console.log(dat)
-			if(dat != ""){
-			  setTitleText(dat);
-			}
-		}
-		return () => clearInterval(interval); // This represents the unmount function, in which you need to clear your interval to prevent memory leaks.
-	  }, [])
-
-	// BluetoothSerial.connect("24:6F:28:79:54:CE")
-    // .then((res) => {
-    //   console.log(`Connected to device 24:6F:28:79:54:CE ooo`);
-    //   connected = true;
-    //   ToastAndroid.show(`Connected to device `, ToastAndroid.SHORT);
-    // })
-    //.catch((err) => console.log((err.message)))
-
-	//BluetoothSerial.readFromDevice().then((data) => {console.log(data)});
+const PlayRoom = ({ navigation }) => {
 	return(
-		<View style={styles.container2}>
-			<ImageBackground style={styles.photo} source={require('../icons/foto1.jpg')}>
-				<Image style={styles.photo3} source={require('../icons/hylyght2.png')} />
-			</ImageBackground>
-			<LinearGradient colors={['black', 'grey']} style={styles.container} start={{ x: 0, y: 0 }}
-        		end={{ x: 1, y: 1 }}>
-				<Text style={styles.text}  > Welcome! </Text>
-				<Text style={styles.subtext}  >Stand On the plate and Jump!</Text>				
-				<ImageBackground style={styles.box} source={require('../icons/white.jpg')}>
-				<Text style={styles.title}> {titleText} cm </Text>
-				</ImageBackground>
-			</LinearGradient>
+		<View style={styles.container}>
+			<View style={styles.intro}>
+				<Text style={styles.introText}>Click on the desired button</Text>
+			</View>
+			<View style={styles.row}>
+				<View>
+					<TouchableOpacity
+					onPress={() => {
+						navigation.navigate('leftfootjump')
+					}}
+					style={styles.buttonContainer2}
+					>
+						<Text style={styles.buttonText2}>LeftLeg Jump</Text>
+					</TouchableOpacity>
+				</View>
+				<View>
+					<TouchableOpacity
+						onPress={() => {
+							navigation.navigate('rightfootjump')
+						}}
+						style={styles.buttonContainer2}
+					>
+						<Text style={styles.buttonText2}>RightLeg Jump</Text>
+					</TouchableOpacity>
+				</View>
+			</View>
+			<View>
+				<TouchableOpacity
+					onPress={() => {
+						navigation.navigate('bothfeetjump')
+					}}
+					style={styles.buttonContainer}
+				>
+					<Text style={styles.buttonText2}>Normal jump</Text>
+				</TouchableOpacity>
+			</View>
+			<View style={styles.bottom}>
+				<View style={styles.row}>
+					<Image
+        				style={styles.tinyLogo}
+        				source={require('../icons/running.png')}
+      				/>
+					<Image
+        				style={styles.tinyLogo2}
+        				source={require('../icons/hyglygt.png')}
+      				/>
+				</View>
+				
+			</View>
 		</View>
-		
+	
 	);
 
 
 }
 
-const styles =StyleSheet.create({
-	container:{
-		justifyContent:'center',
-		alignItems:'center',
-		flex:1
-	},
-	container2:{
-		flex:1,
-	},
-	text:{
-		fontFamily: 'bold',
-		fontSize: 30,
-		color:"white",
-
-	},
-	subtext:{
-		fontFamily: 'bold',
-		fontSize: 20,
-		color:"white",
-		flex:0.3
-	},
-	photo:{
-		backgroundColor: "transparent",
-		width:360,
-		height:150,
-	},
-	photo3:{
-		backgroundColor: "transparent",
-		width:105,
-		height:500,
-		flex:0.5,
-		marginLeft:235,
-		marginTop:100
-	},
-	title:{
-		color:"black",
-		textAlign: 'center',
-		fontWeight: 'bold',
-		fontSize:30
-
-	  },
-	box:{
-		flex:0.5,
-		width:250,
-		height:50,
-		textAlign: 'center'
-	}
-
-})
+const styles = StyleSheet.create({
+buttonContainer2: {
+	marginVertical: 20,
+	height: 150,
+	width:150,
+	marginHorizontal: 5,
+	backgroundColor: '#5d57ff',
+	justifyContent: 'center',
+	alignItems: 'center',
+	borderRadius: 8,
+},
+buttonContainer: {
+	marginLeft:105,
+	height: 150,
+	width:150,
+	marginHorizontal: 10,
+	backgroundColor: '#5d57ff',
+	justifyContent: 'center',
+	alignItems: 'center',
+	borderRadius: 8,
+},
+buttonText2: {
+	textTransform: 'uppercase',
+	color: '#fff',
+	fontSize: 12,
+	fontWeight: 'bold',
+},
+row:{
+	flexDirection: 'row',
+	marginHorizontal: 20,
+	 marginTop: 5,
+},
+intro:{
+	height:100,
+	backgroundColor: 'black',
+},
+introText: {
+	textTransform: 'uppercase',
+	color: '#fff',
+	fontSize: 12,
+	fontWeight: 'bold',
+	textAlign: 'center',
+	marginTop:30
+},
+tinyLogo: {
+    width: 50,
+    height: 50,
+  },
+tinyLogo2: {
+    width: 100,
+    height: 50,
+	position: 'absolute', top: 0, left: 100
+},
+bottom:{
+  flex: 1,
+  justifyContent: 'flex-end',
+  marginBottom: 0
+},
+container: {
+    flex: 1,
+	backgroundColor: 'white'
+  }
+});
 export default PlayRoom
